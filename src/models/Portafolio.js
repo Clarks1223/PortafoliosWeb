@@ -5,15 +5,15 @@ const portfolioSchema = new Schema(
       type: String,
       require: true,
     },
-    descripcion: {
+    category: {
       type: String,
       require: true,
     },
-    category: {
+    description: {
       type: String,
       require: true,
     },
   },
   { timestamps: true }
 );
-module.exports = model("portafolio", portfolioSchema);
+module.exports = model("portfolio", portfolioSchema);
