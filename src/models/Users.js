@@ -15,18 +15,22 @@ const userSchema = new Schema(
       require: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
-//Metodo para cifrar el password del usuario
-user.Schema.methods.encrypPassword = async (password) => {
+
+// Método para cifrar el password del usuario
+userSchema.methods.encrypPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   const passwordEncryp = await bcrypt.hash(password, salt);
   return passwordEncryp;
 };
 
-//Metodo para verificar si el password ingresado es el mismo de la BB
-user.Schema.methods.matchPassword = async function (password) {
+// Método para verificar si el password ingresado es el mismo de la BDD
+userSchema.methods.matchPassword = async function (password) {
   const response = await bcrypt.compare(password, this.password);
   return response;
 };
+
 module.exports = model("user", userSchema);

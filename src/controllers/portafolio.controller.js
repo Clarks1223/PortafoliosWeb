@@ -3,7 +3,7 @@ const Portfolio = require("../models/Portafolio");
 
 //endpoints
 const renderAllPortafolios = async (req, res) => {
-  const portfolios = await Portfolio.find().lean();
+  const portfolios = await Portfolio.find({ user: req.user._id }).lean();
   res.render("portafolio/allPortfolios", { portfolios });
 };
 
@@ -19,6 +19,7 @@ const createNewPortafolio = async (req, res) => {
   //console.log("Los datos que llegan: ", req.body);
   const { title, category, description } = req.body;
   const newPortfolio = new Portfolio({ title, category, description });
+  newPortfolio.user = req.user._id;
   await newPortfolio.save();
   res.redirect("/portafolios");
   //res.json({ newPortfolio });
@@ -28,6 +29,9 @@ const renderEditPortafolioForm = async (req, res) => {
   res.render("portafolio/editPortfolio", { portfolio });
 };
 const updatePortafolio = async (req, res) => {
+  const portfolio = await Portfolio.findById(req.params.id).lean();
+  if (!(portfolio.user.toString() !== req.user._id.toString()))
+    return res.redirect("/portafolios");
   const { title, category, description } = req.body;
   await Portfolio.findByIdAndUpdate(req.params.id, {
     title,
