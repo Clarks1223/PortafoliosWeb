@@ -19,6 +19,7 @@
           action="/portafolio/edit/{{portfolio._id}}?_method=PUT"
           method="POST"
           class="d-inline"
+          enctype="multipart/form-data"
         >
 
           <input type="hidden" name="_method" value="PUT" />
@@ -49,6 +50,18 @@
               value="{{portfolio.category}}"
             />
             <label for="category">Category</label>
+          </div>
+
+          <!-- Image input-->
+          <div class="form-floating mb-3">
+            <input
+              class="form-control"
+              id="image"
+              type="file"
+              placeholder="Select your imagen..."
+              name="image"
+            />
+            <label for="image">Image</label>
           </div>
 
           <!-- Description input-->

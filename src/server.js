@@ -5,6 +5,7 @@ const methodOverride = require("method-override");
 //para el inicio de sesion
 const passport = require("passport");
 const session = require("express-session");
+const fileUpload = require("express-fileupload");
 
 //inicializaciones
 const app = express();
@@ -24,6 +25,14 @@ app.engine(
   })
 );
 app.set("view engine", ".hbs");
+
+//configuracion para imagenes con fileupload
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  })
+);
 
 //Middlewares
 app.use(express.urlencoded({ extended: false }));

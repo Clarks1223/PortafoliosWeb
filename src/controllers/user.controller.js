@@ -17,7 +17,7 @@ const registerNewUser = async (req, res) => {
   const newUser = await new User({ name, email, password, confirmpassword });
   newUser.password = await newUser.encrypPassword(password);
   const token = newUser.crearToken();
-  sendMailToUser(email, token);
+  //sendMailToUser(email, token);
   newUser.save();
   res.redirect("/user/login");
 };
