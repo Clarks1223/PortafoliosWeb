@@ -16,11 +16,12 @@ const registerNewUser = async (req, res) => {
     return res.send("Lo sentimos, el email ya se encuentra registrado");
   const newUser = await new User({ name, email, password, confirmpassword });
   newUser.password = await newUser.encrypPassword(password);
-  const token = newUser.crearToken();
   //sendMailToUser(email, token);
+  newUser.crearToken();
   newUser.save();
   res.redirect("/user/login");
 };
+
 const renderLoginForm = (req, res) => {
   res.render("user/loginForm");
 };

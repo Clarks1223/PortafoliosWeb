@@ -18,6 +18,7 @@ const renderPortafolioForm = (req, res) => {
   //Redirige a la ruta para crear un nuevo portafolio
   res.render("portafolio/newFormPortafolio");
 };
+
 const createNewPortafolio = async (req, res) => {
   //Para crear un nuevo portafolio con los datos que se envian desde el formulario
   //console.log("Los datos que llegan: ", req.body);
@@ -35,10 +36,12 @@ const createNewPortafolio = async (req, res) => {
   res.redirect("/portafolios");
   //res.json({ newPortfolio });
 };
+
 const renderEditPortafolioForm = async (req, res) => {
   const portfolio = await Portfolio.findById(req.params.id).lean();
   res.render("portafolio/editPortfolio", { portfolio });
 };
+
 const updatePortafolio = async (req, res) => {
   const portfolio = await Portfolio.findById(req.params.id).lean();
   if (portfolio._id != req.params.id) return res.redirect("/portafolios");
@@ -68,6 +71,7 @@ const updatePortafolio = async (req, res) => {
   }
   res.redirect("/portafolios");
 };
+
 const deletePortafolio = async (req, res) => {
   const portafolio = await Portfolio.findByIdAndDelete(req.params.id);
   await deleteImage(portafolio.image.public_id);
