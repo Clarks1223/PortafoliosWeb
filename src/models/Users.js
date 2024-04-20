@@ -14,7 +14,7 @@ const userSchema = new Schema(
       type: String,
       require: true,
     },
-    toke: {
+    token: {
       type: String,
       default: null,
     },

@@ -1,5 +1,7 @@
 const User = require("../models/Users");
 const passport = require("passport");
+// importo nodemailer con mailtrap
+const { sendMailToUser } = require("../config/nodemailer");
 
 const renderRegisterForm = (req, res) => {
   res.render("user/registerForm");
@@ -16,8 +18,8 @@ const registerNewUser = async (req, res) => {
     return res.send("Lo sentimos, el email ya se encuentra registrado");
   const newUser = await new User({ name, email, password, confirmpassword });
   newUser.password = await newUser.encrypPassword(password);
-  //sendMailToUser(email, token);
-  newUser.crearToken();
+  const token = newUser.crearToken();
+  sendMailToUser(email, token);
   newUser.save();
   res.redirect("/user/login");
 };
@@ -38,10 +40,24 @@ const logoutUser = (req, res) => {
   });
 };
 
+const confirmEmail = async (req, res) => {
+  if (!req.params.token)
+    return res.send("Lo sentimos, no se puede validar la cuenta");
+  const userBDD = await User.findOne({ token: req.params.token });
+  if (userBDD.confirmEmail == false) {
+    userBDD.confirmEmail = true;
+    await userBDD.save();
+    res.send("Token confirmado, ya puedes iniciar sesión");
+  } else {
+    res.send("El usuario ya ha sido confirmado");
+  } 
+};
+
 module.exports = {
   renderRegisterForm,
   registerNewUser,
   renderLoginForm,
   loginUser,
   logoutUser,
+  confirmEmail,
 };
