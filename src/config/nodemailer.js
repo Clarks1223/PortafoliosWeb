@@ -19,7 +19,7 @@ module.exports.sendMailToUser = async (userMail, token) => {
     from: "gustavouchuarii@gmail.com",
     to: userMail,
     subject: "Verifica tu cuenta de correo electronico",
-    html: `<a href="http://localhost:3000/user/confirmar/${token}">Clic para confirmar tu cuenta</a>`,
+    html: `<a href="${process.env.DOMINIO_WEB}/user/confirmar/${token}">Clic para confirmar tu cuenta</a>`,
   });
   console.log("Mensaje enviado");
 };
