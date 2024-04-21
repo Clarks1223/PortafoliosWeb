@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const { DBUSER, DBPASSWORD, DBNAME } = process.env;
 
-//const MONGODB_URI = `mongodb+srv://${DBUSER}:${DBPASSWORD}@cluster0.6e8zntc.mongodb.net/${DBNAME}`;
-const MONGODB_URI = "mongodb://localhost:27017/portfolio";
+const MONGODB_URI = `mongodb+srv://${DBUSER}:${DBPASSWORD}@${DBNAME}.wujqte6.mongodb.net/`;
+//const MONGODB_URI = "mongodb://localhost:27017/portfolio";
 
 connection = async () => {
   try {

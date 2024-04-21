@@ -5,22 +5,21 @@ dotenv.config();
 
 //create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
-  host: process.env.HOST_MAILTRAP,
-  port: process.env.PORT_MAILTRAP,
+  host: process.env.HOST_MAIL,
+  port: process.env.PORT_MAIL,
   auth: {
-    user: process.env.USER_MAILERTRAP,
-    pass: process.env.PASS_MAILTRAP,
+    user: process.env.USER_MAIL,
+    pass: process.env.PASS_MAIL,
   },
 });
 
 //send mail with defined transport object
 module.exports.sendMailToUser = async (userMail, token) => {
-  console.log(token);
   let info = await transporter.sendMail({
-    from: "clarks@developer.com",
+    from: "gustavouchuarii@gmail.com",
     to: userMail,
     subject: "Verifica tu cuenta de correo electronico",
     html: `<a href="http://localhost:3000/user/confirmar/${token}">Clic para confirmar tu cuenta</a>`,
   });
-  console.log("Message sent: %s", info.messageId);
+  console.log("Mensaje enviado");
 };
